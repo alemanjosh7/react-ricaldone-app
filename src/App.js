@@ -1,26 +1,53 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./App.css";
+import TablaEjemplo from "./Tabla";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const styles = {
+  table: {
+    borderCollapse: "collapse",
+    width: "100%",
+  },
+};
+
+const dataEjemplo = {
+  id: 1,
+  name: 'Cesar',
+  username: 'itr',
+  email: 'yo.ser.estudiante@gmail.com'
+}
+
+class App extends React.Component {
+  state = {
+    titulo: "Ricaldone",
+    data: [],
+  };
+  componentDidMount() {
+    fetch('https://jsonplaceholder.typicode.com/posts')
+      .then((response) => response.json())
+      .then((json) => this.setState({
+        titulo: "Usuarios",
+        data: json,
+      }))
+  }
+  render() {
+    console.log("STATE", this.state);
+    return (
+      <div>
+        <h1>Tabla {this.state.titulo}</h1>
+        <table style={styles.table}>
+          <thead>
+            <tr>
+              <th>UserId</th>
+              <th>Id</th>
+              <th>Title</th>
+              <th>Body</th>
+            </tr>
+          </thead>
+          <TablaEjemplo datos={this.state.data}/>
+        </table>
+      </div>
+    );
+  }
 }
 
 export default App;
